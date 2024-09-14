@@ -18,7 +18,6 @@ dotenv.config();
 app.use(morgan("combined"))
 app.use(express.json())
 app.use(cors())
-app.use(express.static(path.join(__dirname, './client/build')))
 
 // Routes Settings 
 app.use("/api/v1/auth", AuthRoutes)
@@ -32,6 +31,7 @@ console.log(`Port connected on ${process.env.PORT} `)
 // DataBass Connection 
 connection()
 
-app.use("*", function (req, res) {
+app.get("/", function (req, res) {
+    app.use(express.static(path.join(__dirname, './client/build')))
     res.sendFile(path.join(__dirname, "./client/build/index.html"))
 })
